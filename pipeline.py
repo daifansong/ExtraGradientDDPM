@@ -113,9 +113,9 @@ class DDPMPipeline(DiffusionPipeline):
 
             # else:
             #     image = image_pred
-            if t % 100 == 0:
-                qil_img = to_normal(image)
-                qil_img.save(f'final_{t:03d}.png')
+            # if t % 100 == 0:
+            #     qil_img = to_normal(image)
+            #     qil_img.save(f'final_{t:03d}.png')
 
 
         image = (image / 2 + 0.5).clamp(0, 1)
