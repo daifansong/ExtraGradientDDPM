@@ -1,6 +1,10 @@
 # ExtraGradientDDPM
 Extra-Gradient Sampling method with DDPM, using hugging face library
 
+### How to use
+1. quick_start.ipynb
+2. python main.py --extra_gradient True --inference_steps 10
+
 
 Math7503 MScAI HKU
 
