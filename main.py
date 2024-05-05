@@ -1,7 +1,7 @@
 import os
 from tqdm import tqdm
-from pipe import DDPMPipeline
-from sch import DDPMScheduler as customized_scheduler
+from pipeline import DDPMPipeline
+from scheduler import DDPMScheduler as customized_scheduler
 
 mid = 'google/ddpm-cifar10-32'
 # mid = 'anton-l/ddpm-butterflies-128'
