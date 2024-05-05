@@ -1,20 +1,17 @@
-import os
-from tqdm import tqdm
 from pipeline import DDPMPipeline
 from scheduler import DDPMScheduler as customized_scheduler
+import argparse
 
-mid = 'google/ddpm-cifar10-32'
-# mid = 'anton-l/ddpm-butterflies-128'
+parser = argparse.ArgumentParser(description="Original and Extra Gradient DDPM")
+parser.add_argument('--extra_gradient', type=bool, default=False, help='Extra Gradient or Standard DDPM')
+parser.add_argument('--inference_steps', type=int, default=50, help='Inference Steps')
+
+args = parser.parse_args()
+
+# mid = 'google/ddpm-cifar10-32'
+mid = 'anton-l/ddpm-butterflies-128'
 gen1 = DDPMPipeline.from_pretrained(mid).to("mps")
-gen1.scheduler = customized_scheduler(num_train_timesteps=1000, extra_gradient=False)
-# print(gen1.scheduler)
+gen1.scheduler = customized_scheduler(num_train_timesteps=1000, extra_gradient=args.extra_gradient)
 
-#steps = [2, 5, 10, 25, 50, 100, 200, 500]
-steps = [5]
-
-for si in steps:
-    for i in tqdm(range(0, 1), desc='Generating'):
-        if not os.path.exists(f'cifar_ddpm/{si}'):
-            os.makedirs(f'cifar_ddpm/{si}')
-        img1 = gen1(num_inference_steps=si).images
-        img1[0].save(f'cifar_ddpm/{si}/bfly_{i:04}.png')
+img1 = gen1(num_inference_steps=args.inference_steps).images
+img1[0].save(f'Infer{args.inference_steps}.png')
